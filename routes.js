@@ -10,9 +10,13 @@ const jsonBodyParser = bodyParser.json();
 
 //BASIC ROUTES//
 
-router.get("/company", [jsonBodyParser], (req, res) => {
+router.get("/company/user/:id", [jsonBodyParser], (req, res) => {
+  const {
+    params: { id }
+  } = req;
+
   logic
-    .basicSearchCompanyClients()
+    .searchUserById(id)
     .then(res.json.bind(res))
     .catch(err => {
       const { message } = err;
@@ -21,9 +25,43 @@ router.get("/company", [jsonBodyParser], (req, res) => {
     });
 });
 
-router.get("/policies", [jsonBodyParser], (req, res) => {
+router.get("/company/user", [jsonBodyParser], (req, res) => {
+  const {
+    query: { name }
+  } = req;
+
   logic
-    .basicSearchCompanyPolicies()
+    .searchUserByName(name)
+    .then(res.json.bind(res))
+    .catch(err => {
+      const { message } = err;
+
+      res.status(err instanceof LogicError ? 400 : 500).json({ message });
+    });
+});
+
+router.get("/policies/user/", [jsonBodyParser], (req, res) => {
+  const {
+    query: { name }
+  } = req;
+
+  logic
+    .searchUserPoliciesByName(name)
+    .then(res.json.bind(res))
+    .catch(err => {
+      const { message } = err;
+
+      res.status(err instanceof LogicError ? 400 : 500).json({ message });
+    });
+});
+
+router.get("/policies/:id/user", [jsonBodyParser], (req, res) => {
+  const {
+    params: { id }
+  } = req;
+
+  logic
+    .searchPolicieByUserId(id)
     .then(res.json.bind(res))
     .catch(err => {
       const { message } = err;
