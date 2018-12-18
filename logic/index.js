@@ -1,14 +1,14 @@
-const fetch = require("isomorphic-fetch");
-const { validateStringField } = require("../utils/validateStringField");
+const fetch = require('isomorphic-fetch');
+const { validateStringField } = require('../utils/validateStringField');
 
-const companyClientsUrl = "http://www.mocky.io/v2/5808862710000087232b75ac";
-const policiesClientsUrl = "http://www.mocky.io/v2/580891a4100000e8242b75c5";
+const companyClientsUrl = 'http://www.mocky.io/v2/5808862710000087232b75ac';
+const policiesClientsUrl = 'http://www.mocky.io/v2/580891a4100000e8242b75c5';
 
 const logic = {
   searchUserById(id) {
     return Promise.resolve()
       .then(() => {
-        if (!validateStringField("id", id)) throw Error("Invalid ID");
+        if (!validateStringField('id', id)) throw Error('Invalid ID');
       })
       .then(() => fetch(companyClientsUrl))
       .then(response => response.json())
@@ -23,7 +23,7 @@ const logic = {
   searchUserByName(name) {
     return Promise.resolve()
       .then(() => {
-        if (!validateStringField("name", name)) throw Error("Invalid Name");
+        if (!validateStringField('name', name)) throw Error('Invalid Name');
       })
       .then(() => fetch(companyClientsUrl))
       .then(response => response.json())
@@ -40,7 +40,7 @@ const logic = {
   searchUserPoliciesByName(name) {
     return Promise.resolve()
       .then(() => {
-        if (!validateStringField("name", name)) throw Error("Invalid Name");
+        if (!validateStringField('name', name)) throw Error('Invalid Name');
       })
       .then(() => fetch(companyClientsUrl))
       .then(response => response.json())
@@ -52,7 +52,7 @@ const logic = {
 
         const { id, role } = client;
 
-        if (role === "user") throw Error(`Client ${name} not have permissions`);
+        if (role === 'user') throw Error(`Client ${name} not have permissions`);
 
         return fetch(policiesClientsUrl)
           .then(response => response.json())
@@ -71,8 +71,8 @@ const logic = {
   searchPolicieByUserId(policieId) {
     return Promise.resolve()
       .then(() => {
-        if (!validateStringField("PoliceID", policieId))
-          throw Error("Invalid Policie ID");
+        if (!validateStringField('PoliceID', policieId))
+          throw Error('Invalid Policie ID');
       })
       .then(() => fetch(policiesClientsUrl))
       .then(response => response.json())
@@ -88,7 +88,7 @@ const logic = {
           .then(response => response.json())
           .then(({ clients }) => clients.find(client => client.id === clientId))
           .then(client => {
-            if (client.role === "user")
+            if (client.role === 'user')
               throw Error(`Client ${client.name} not have permissions`);
             return client;
           });

@@ -1,14 +1,14 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const express = require("express");
-const bodyParser = require("body-parser");
-const { logic } = require("./logic");
+const express = require('express');
+const bodyParser = require('body-parser');
+const { logic } = require('./logic');
 
 const router = express.Router();
 
 const jsonBodyParser = bodyParser.json();
 
-router.get("/company/user/:id", [jsonBodyParser], (req, res) => {
+router.get('/company/user/:id', [jsonBodyParser], (req, res) => {
   const {
     params: { id }
   } = req;
@@ -23,7 +23,7 @@ router.get("/company/user/:id", [jsonBodyParser], (req, res) => {
     });
 });
 
-router.get("/company/user", [jsonBodyParser], (req, res) => {
+router.get('/company/user', [jsonBodyParser], (req, res) => {
   const {
     query: { name }
   } = req;
@@ -38,7 +38,7 @@ router.get("/company/user", [jsonBodyParser], (req, res) => {
     });
 });
 
-router.get("/policies/user/", [jsonBodyParser], (req, res) => {
+router.get('/policies/user/', [jsonBodyParser], (req, res) => {
   const {
     query: { name }
   } = req;
@@ -53,7 +53,7 @@ router.get("/policies/user/", [jsonBodyParser], (req, res) => {
     });
 });
 
-router.get("/policies/:id/user", [jsonBodyParser], (req, res) => {
+router.get('/policies/:id/user', [jsonBodyParser], (req, res) => {
   const {
     params: { id }
   } = req;
