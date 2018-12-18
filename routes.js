@@ -2,13 +2,11 @@ require("dotenv").config();
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const { logic, LogicError } = require("./logic");
+const { logic } = require("./logic");
 
 const router = express.Router();
 
 const jsonBodyParser = bodyParser.json();
-
-//BASIC ROUTES//
 
 router.get("/company/user/:id", [jsonBodyParser], (req, res) => {
   const {
@@ -21,7 +19,7 @@ router.get("/company/user/:id", [jsonBodyParser], (req, res) => {
     .catch(err => {
       const { message } = err;
 
-      res.status(err instanceof LogicError ? 400 : 500).json({ message });
+      res.status(err instanceof Error ? 400 : 500).json({ message });
     });
 });
 
@@ -36,7 +34,7 @@ router.get("/company/user", [jsonBodyParser], (req, res) => {
     .catch(err => {
       const { message } = err;
 
-      res.status(err instanceof LogicError ? 400 : 500).json({ message });
+      res.status(err instanceof Error ? 400 : 500).json({ message });
     });
 });
 
@@ -51,7 +49,7 @@ router.get("/policies/user/", [jsonBodyParser], (req, res) => {
     .catch(err => {
       const { message } = err;
 
-      res.status(err instanceof LogicError ? 400 : 500).json({ message });
+      res.status(err instanceof Error ? 400 : 500).json({ message });
     });
 });
 
@@ -66,7 +64,7 @@ router.get("/policies/:id/user", [jsonBodyParser], (req, res) => {
     .catch(err => {
       const { message } = err;
 
-      res.status(err instanceof LogicError ? 400 : 500).json({ message });
+      res.status(err instanceof Error ? 400 : 500).json({ message });
     });
 });
 
