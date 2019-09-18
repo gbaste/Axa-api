@@ -1,10 +1,34 @@
 const fetch = require('isomorphic-fetch');
-const { validateStringField } = require('../utils/validateStringField');
+const {
+  validateStringField
+} = require('../utils/validateStringField');
 
 const companyClientsUrl = 'http://www.mocky.io/v2/5808862710000087232b75ac';
 const policiesClientsUrl = 'http://www.mocky.io/v2/580891a4100000e8242b75c5';
+const SECRET_PASSWORD = 'Axa123'
 
 const logic = {
+  authenticateUser(email, password) {
+    return Promise.resolve()
+      .then(() => {
+        if (!validateStringField('email', email)) throw Error('Invalid Email');
+        if (!validateStringField('password', password)) throw Error('Invalid Password');
+      })
+      .then(() => fetch(companyClientsUrl))
+      .then(response => response.json())
+      .then(({
+        clients
+      }) => clients.find(client => client.email === email))
+      .then(client => {
+        if (!client || password !== SECRET_PASSWORD) throw Error(`Invalid credentials`);
+
+        return {
+          email: client.email,
+          role: client.role
+        };
+      });
+  },
+
   searchUserById(id) {
     return Promise.resolve()
       .then(() => {
@@ -12,7 +36,9 @@ const logic = {
       })
       .then(() => fetch(companyClientsUrl))
       .then(response => response.json())
-      .then(({ clients }) => clients.find(client => client.id === id))
+      .then(({
+        clients
+      }) => clients.find(client => client.id === id))
       .then(client => {
         if (!client) throw Error(`Client with ${id} id does not exist`);
 
@@ -27,7 +53,9 @@ const logic = {
       })
       .then(() => fetch(companyClientsUrl))
       .then(response => response.json())
-      .then(({ clients }) =>
+      .then(({
+          clients
+        }) =>
         clients.find(client => client.name.toLowerCase() === name.toLowerCase())
       )
       .then(client => {
@@ -44,19 +72,23 @@ const logic = {
       })
       .then(() => fetch(companyClientsUrl))
       .then(response => response.json())
-      .then(({ clients }) =>
+      .then(({
+          clients
+        }) =>
         clients.find(client => client.name.toLowerCase() === name.toLowerCase())
       )
       .then(client => {
         if (!client) throw Error(`Client with ${name} name does not exist`);
 
-        const { id, role } = client;
-
-        if (role === 'user') throw Error(`Client ${name} not have permissions`);
+        const {
+          id
+        } = client;
 
         return fetch(policiesClientsUrl)
           .then(response => response.json())
-          .then(({ policies }) =>
+          .then(({
+              policies
+            }) =>
             policies.filter(policie => policie.clientId === id)
           )
           .then(policie => {
@@ -68,7 +100,7 @@ const logic = {
       });
   },
 
-  searchPolicieByUserId(policieId) {
+  searchUserByPolicieId(policieId) {
     return Promise.resolve()
       .then(() => {
         if (!validateStringField('PoliceID', policieId))
@@ -76,22 +108,24 @@ const logic = {
       })
       .then(() => fetch(policiesClientsUrl))
       .then(response => response.json())
-      .then(({ policies }) =>
+      .then(({
+          policies
+        }) =>
         policies.find(policie => policie.id === policieId)
       )
       .then(policie => {
         if (!policie) throw Error(`Policie with ${policieId} does not exist`);
 
-        const { clientId } = policie;
+        const {
+          clientId
+        } = policie;
 
         return fetch(companyClientsUrl)
           .then(response => response.json())
-          .then(({ clients }) => clients.find(client => client.id === clientId))
-          .then(client => {
-            if (client.role === 'user')
-              throw Error(`Client ${client.name} not have permissions`);
-            return client;
-          });
+          .then(({
+            clients
+          }) => clients.find(client => client.id === clientId))
+          .then(client => client);
       });
   }
 };

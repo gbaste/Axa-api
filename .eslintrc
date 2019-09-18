@@ -2,6 +2,6 @@
   "extends": ["airbnb-base", "prettier"],
   "root": true,
   "env": {
-    "mocha": true
+    "jest": true
   }
 }

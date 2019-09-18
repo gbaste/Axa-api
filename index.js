@@ -2,11 +2,13 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const package = require("./package.json");
+const packageJson = require("./package.json");
 const routes = require("./routes");
 
 const {
-  env: { PORT }
+  env: {
+    PORT
+  }
 } = process;
 
 const app = express();
@@ -17,6 +19,6 @@ app.use("/api", routes);
 
 app.listen(PORT, () =>
   console.log(
-    `${package.name} ${package.version} up and running on port ${PORT}`
+    `${packageJson.name} ${packageJson.version} up and running on port ${PORT}`
   )
 );

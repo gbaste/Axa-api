@@ -1,6 +1,6 @@
-## Axa Assessment
+# Axa Assessment
 
-Create a Web API for a insurance
+## Create a Web API for an insurance company
 
 1. Get user data filtered by user id
 2. Get user data filtered by user name
@@ -29,17 +29,45 @@ $ npm install
 ```
 $ npm start
 ```
+5. Watch mode
 
+```
+$ npm run watch
+```
+
+## Test with Jest
+
+1. Run test
+
+```
+$ npm test
+```
+
+2. Run test coverage
+
+```
+$ npm run coverage
+```
 ## EndPoints
 
+### Authenticate user
+
+1. POST /api/auth
+
+```
+{
+	"email": "manningblankenship@quotezart.com",
+	"password": "Axa123"
+}
+```
 ### These endpoints do not require admin role
 
-1. GET /company/user/:id
+1. GET /api/company/user/:id
 
-2. GET /company/user?name='NAME'
+2. GET /api/company/user?name='NAME'
 
 ### These endpoints requires admin role
 
-3. GET /policies/user?name='NAME'
+3. GET /api/policies/user?name='NAME'
 
-4. GET /policies/:id/user
+4. GET /api/policies/:id/user
